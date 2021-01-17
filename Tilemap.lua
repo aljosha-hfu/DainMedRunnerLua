@@ -64,9 +64,13 @@ function Tilemap:create()
         TilemapHeight = 32,
         tiles = {},
 
+        gravity = 3,
+
         camX = 0,
         camY = -3
     }
+
+      this.player = Player:create(this)
 
     -- generate a quad (individual frame/sprite) for each tile
     this.tileSprites = generateQuads(this.spritesheet, 32, 32)
@@ -246,17 +250,20 @@ function Tilemap:setTile(x, y, tile)
 end
 
 function Tilemap:update(dt)
+  self.player:update(dt)
     self.camX = self.camX + dt * scrollSpeed
 end
 
 -- renders our Tilemap to the screen, to be called by main's render
 function Tilemap:render()
+
     for y = 1, self.TilemapHeight do
         for x = 1, self.TilemapWidth do
             love.graphics.draw(self.spritesheet, self.tileSprites[self:getTile(x, y)],
                 (x - 1) * self.tileWidth, (y - 1) * self.tileHeight)
         end
     end
+    self.player:render()
 end
 
 
@@ -283,6 +290,30 @@ function generateQuads(atlas, tilewidth, tileheight)
     return quads
 end
 
+-- gets the tile type at a given pixel coordinate
+function Tilemap:tileAt(x, y)
+    return self:getTile(math.floor(x / self.tileWidth) + 1, math.floor(y / self.tileHeight) + 1)
+end
+
 function Tilemap:update(dt)
+  self.player:update(dt)
+
     self.camX = self.camX + dt * moveSpeed
+end
+
+-- return whether a given tile is collidable
+function Tilemap:collides(tile)
+    -- define our collidable tiles
+    local collidables = {
+        TILE_GRASS_TOP, TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3, TILE_GAP_TOP_LEFT, TILE_GAP_TOP_RIGHT
+    }
+
+    -- iterate and return true if our tile type matches
+    for _, v in ipairs(collidables) do
+        if tile == v then
+            return true
+        end
+    end
+
+    return false
 end

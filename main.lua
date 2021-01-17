@@ -5,6 +5,8 @@ tileMap = Tilemap:create()
 
 -- performs initialization of all objects and data needed by program
 function love.load()
+
+  love.window.setMode(800, 600, {resizable=true, vsync=false, minwidth=400, minheight=300})
   -- makes upscaling look pixel-y instead of blurry
   love.graphics.setDefaultFilter('nearest', 'nearest')
 end

@@ -304,9 +304,21 @@ end
 -- return whether a given tile is collidable
 function Tilemap:collides(tile)
     -- define our collidable tiles
+
+    local obstacles = {
+        TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3
+    }
+
     local collidables = {
         TILE_GRASS_TOP, TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3, TILE_GAP_TOP_LEFT, TILE_GAP_TOP_RIGHT
     }
+
+    for _, v in ipairs(obstacles) do
+        if tile == v then
+            gameOver = true
+            return true
+        end
+    end
 
     -- iterate and return true if our tile type matches
     for _, v in ipairs(collidables) do

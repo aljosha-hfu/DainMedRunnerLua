@@ -35,8 +35,6 @@ function Player:create(tileMap)
     }
 
     -- position on top of tileMap tiles
-    --this.y = tileMap.tileHeight * ((tileMap.TilemapHeight - 2) / 2) - this.height
-    --this.x = tileMap.tileWidth * 10
     this.x = love.graphics.getWidth() /2
     this.y = tileMap.tileHeight * ((tileMap.TilemapHeight - 2) / 2) - this.height
 
@@ -80,10 +78,7 @@ function Player:create(tileMap)
                 this.animation = this.animations['jumping']
             end
 
-            -- check for collisions moving left and right
-            this:checkRightCollision()
-            this:checkLeftCollision()
-
+            this:checkCollision()
             -- check if there's a tile directly beneath us
             if not this.tileMap:collides(this.tileMap:tileAt(this.x, this.y + this.height)) and
                 not this.tileMap:collides(this.tileMap:tileAt(this.x + this.width - 1, this.y + this.height)) then
@@ -113,10 +108,7 @@ function Player:create(tileMap)
                 this.animation = this.animations['walking']
                 this.y = this.y - (this.y % this.tileMap.tileHeight)
             end
-
-            -- check for collisions moving left and right
-            this:checkRightCollision()
-            this:checkLeftCollision()
+            this:checkCollision()
         end
     }
 
@@ -132,29 +124,11 @@ function Player:update(dt)
     self.y = self.y + self.dy * dt
 end
 
--- checks two tiles to our left to see if a collision occurred
-function Player:checkLeftCollision()
-    if self.dx < 0 then
-        -- check if there's a tile directly beneath us
-        if self.tileMap:collides(self.tileMap:tileAt(self.x - 1, self.y)) or
-            self.tileMap:collides(self.tileMap:tileAt(self.x - 1, self.y + self.height - 1)) then
-            -- if so, reset velocity and position and change state
-            -- game over
-        end
-    end
+function Player:checkCollision()
+  self.tileMap:collides(self.tileMap:tileAt(self.x + self.width, self.y))
+      self.tileMap:collides(self.tileMap:tileAt(self.x + self.width, self.y + self.height - 1))
 end
 
--- checks two tiles to our right to see if a collision occurred
-function Player:checkRightCollision()
-    if self.dx > 0 then
-        -- check if there's a tile directly beneath us
-        if self.tileMap:collides(self.tileMap:tileAt(self.x + self.width, self.y)) or
-            self.tileMap:collides(self.tileMap:tileAt(self.x + self.width, self.y + self.height - 1)) then
-            -- if so, reset velocity and position and change state
-            -- game over
-        end
-    end
-end
 
 function Player:render()
     -- draw sprite with scale factor and offsets

@@ -2,41 +2,62 @@ Tilemap = {}
 Tilemap.__index = Tilemap
 
 TILE_GRASS_TOP = 2
-TILE_GRASS_BOTTOM = 10
-TILE_EMPTY = 17
+TILE_GRASS_BOTTOM = 13
+
+TILE_GAP_TOP_LEFT = 1
+TILE_GAP_TOP_RIGHT = 3
+TILE_GAP_BOTTOM_LEFT = 12
+TILE_GAP_BOTTOM_RIGHT = 14
+
+TILE_EMPTY = 78
 
 --tiles for the first house
-TILE_HOUSE1_LEFT_ROOF = 25
-TILE_HOUSE1_MIDDLE_ROOF = 26
-TILE_HOUSE1_RIGHT_ROOF = 27
+TILE_HOUSE1_LEFT_ROOF = 34
+TILE_HOUSE1_MIDDLE_ROOF = 35
+TILE_HOUSE1_RIGHT_ROOF = 36
 
-TILE_HOUSE1_LEFT_MIDDLE = 33
-TILE_HOUSE1_MIDDLE_MIDDLE = 34
-TILE_HOUSE1_RIGHT_MIDDLE = 35
+TILE_HOUSE1_LEFT_MIDDLE = 45
+TILE_HOUSE1_MIDDLE_MIDDLE = 46
+TILE_HOUSE1_RIGHT_MIDDLE = 47
 
-TILE_HOUSE1_LEFT_BOTTOM = 41
-TILE_HOUSE1_MIDDLE_BOTTOM = 42
-TILE_HOUSE1_RIGHT_BOTTOM = 43
+TILE_HOUSE1_LEFT_BOTTOM = 56
+TILE_HOUSE1_MIDDLE_BOTTOM = 57
+TILE_HOUSE1_RIGHT_BOTTOM = 58
 
 --tiles for the second house
-TILE_HOUSE2_LEFT_ROOF = 28
-TILE_HOUSE2_MIDDLE_ROOF = 29
-TILE_HOUSE2_RIGHT_ROOF = 30
+TILE_HOUSE2_LEFT_ROOF = 37
+TILE_HOUSE2_MIDDLE_ROOF = 38
+TILE_HOUSE2_RIGHT_ROOF = 39
 
-TILE_HOUSE2_LEFT_MIDDLE = 36
-TILE_HOUSE2_MIDDLE_MIDDLE = 37
-TILE_HOUSE2_RIGHT_MIDDLE = 38
+TILE_HOUSE2_LEFT_MIDDLE = 48
+TILE_HOUSE2_MIDDLE_MIDDLE = 49
+TILE_HOUSE2_RIGHT_MIDDLE = 50
 
-TILE_HOUSE2_LEFT_BOTTOM = 44
-TILE_HOUSE2_MIDDLE_BOTTOM = 45
-TILE_HOUSE2_RIGHT_BOTTOM = 46
+TILE_HOUSE2_LEFT_BOTTOM = 59
+TILE_HOUSE2_MIDDLE_BOTTOM = 60
+TILE_HOUSE2_RIGHT_BOTTOM = 61
 
+--tiles for trees
+TILE_TREE_ROOT_LEFT = 67
+TILE_TREE_ROOT_RIGHT = 68
+TILE_TREE_STEM_LEFT = 69
+TILE_TREE_STEM_RIGHT = 70
+TILE_TREE_CROWN_LEFT = 71
+TILE_TREE_CROWN_RIGHT = 72
 
-local moveSpeed = 30
+--tiles for obstacles
+TILE_OBSTACLE1 = 25
+TILE_OBSTACLE2 = 26
+TILE_OBSTACLE3 = 27
+TILE_PLATFORM_LEFT = 6
+TILE_PLATFORM_MIDDLE = 7
+TILE_PLATFORM_RIGHT = 8
+
+local moveSpeed = 100
 
 function Tilemap:create()
     local this = {
-        spritesheet = love.graphics.newImage('graphics/tiles_old.png'),
+        spritesheet = love.graphics.newImage('graphics/tiles.png'),
         tileWidth = 32,
         tileHeight = 32,
         TilemapWidth = 32,
@@ -73,10 +94,101 @@ function Tilemap:create()
     end
 
     local x = 1
+    local gap = true
+
     while x < this.TilemapWidth do
       if x < this.TilemapWidth - 3 then
-        if math.random(20) == 1 then
-          local houseStart = math.random(this.TilemapHeight / 2 - 3)
+
+        --spawning gaps
+        if love.math.random(5) == 1 and gap == true then
+          this:setTile(x, this.TilemapHeight/2, TILE_EMPTY)
+          this:setTile(x+1, this.TilemapHeight/2, TILE_EMPTY)
+          this:setTile(x-1, this.TilemapHeight/2, TILE_GAP_TOP_RIGHT)
+          this:setTile(x+2, this.TilemapHeight/2, TILE_GAP_TOP_LEFT)
+          for y=this.TilemapHeight/2 +1, this.TilemapHeight do
+            this:setTile(x, y, TILE_EMPTY)
+            this:setTile(x+1, y, TILE_EMPTY)
+            this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
+            this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
+          end
+          x = x + 3
+          gap = false
+        else
+          gap = true
+          x = x + 2
+        end
+
+        --spawning obstacles
+        local randomobstacle = love.math.random(2)
+        if randomobstacle == 1 then
+          local obstaclecounter = 1
+          this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+          this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+          obstaclecounter = obstaclecounter + 1
+          if love.math.random(2) == 1 then
+            this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+            this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+            obstaclecounter = obstaclecounter + 2
+            if love.math.random(2) == 1 then
+              this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+              this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+              this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+              this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+              this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+              this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+              obstaclecounter = obstaclecounter + 1
+              if love.math.random(2) == 1 then
+                this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+                this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                this:setTile(x + 4, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+                this:setTile(x+ 1, this.TilemapHeight/2 -4, TILE_EMPTY)
+                this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+                this:setTile(x + 3, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+                obstaclecounter = obstaclecounter + 1
+                if love.math.random(2) == 1 then
+                  this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+                  this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                  this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                  this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                  this:setTile(x + 4, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+                  this:setTile(x + 5, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+                  this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+                  this:setTile(x + 3, this.TilemapHeight/2 -4, TILE_PLATFORM_MIDDLE)
+                  this:setTile(x + 4, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+                  obstaclecounter = obstaclecounter + 1
+                end
+              end
+            end
+          end
+          x = x + obstaclecounter + 1
+
+        elseif randomobstacle == 2 then
+          this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE3)
+          x = x + 2
+        end
+
+        --spawning trees
+        if love.math.random(5) == 1 then
+          local treeStart = math.random(8, this.TilemapHeight/ 2 - 2)
+          this:setTile(x, treeStart, TILE_TREE_CROWN_LEFT)
+          this:setTile(x + 1, treeStart, TILE_TREE_CROWN_RIGHT)
+
+          this:setTile(x, this.TilemapHeight/2 -1, TILE_TREE_ROOT_LEFT)
+          this:setTile(x+1, this.TilemapHeight/2 -1, TILE_TREE_ROOT_RIGHT)
+
+          for i = treeStart + 1, this.TilemapHeight/2-2 do
+            this:setTile(x, i, TILE_TREE_STEM_LEFT)
+            this:setTile(x+1, i, TILE_TREE_STEM_RIGHT)
+          end
+          x = x + 2
+        end
+
+        --spawning varieties of house1
+        if love.math.random(5) == 1 then
+          local houseStart = math.random(3, this.TilemapHeight / 2 - 3)
           this:setTile(x, houseStart, TILE_HOUSE1_LEFT_ROOF)
           this:setTile(x+1, houseStart, TILE_HOUSE1_MIDDLE_ROOF)
           this:setTile(x+2, houseStart, TILE_HOUSE1_RIGHT_ROOF)
@@ -90,9 +202,12 @@ function Tilemap:create()
             this:setTile(x+1, i, TILE_HOUSE1_MIDDLE_MIDDLE)
             this:setTile(x+2, i, TILE_HOUSE1_RIGHT_MIDDLE)
           end
-          x = x + 3
-        elseif math.random(20) == 1 then
-          local houseStart = math.random(this.TilemapHeight / 2 - 3)
+          x = x + 4
+        end
+
+        --spawning varieties of house2
+        if love.math.random(5) == 1 then
+          local houseStart = math.random(3, this.TilemapHeight / 2 - 3)
           this:setTile(x, houseStart, TILE_HOUSE2_LEFT_ROOF)
           this:setTile(x+1, houseStart, TILE_HOUSE2_MIDDLE_ROOF)
           this:setTile(x+2, houseStart, TILE_HOUSE2_RIGHT_ROOF)
@@ -106,27 +221,20 @@ function Tilemap:create()
             this:setTile(x+1, i, TILE_HOUSE2_MIDDLE_MIDDLE)
             this:setTile(x+2, i, TILE_HOUSE2_RIGHT_MIDDLE)
           end
-          x = x + 3
-        elseif math.random(10) == 1 then
-          for y=this.TilemapHeight/2, this.TilemapHeight do
-            this:setTile(x, y, TILE_EMPTY)
-            this:setTile(x+1, y, TILE_EMPTY)
-          end
-          x = x + 2
-        elseif math.random(10) == 1 then
-
-        else
-          x = x + 1
+          x = x + 4
         end
-      else
-        x = x+1
+
       end
+      x = x + 1
     end
 
 
   return this
 end
 
+function Tilemap:generateBackground()
+  --TODO try to seperate genration of background and foreground
+end
 -- returns an integer value for the tile at a given x-y coordinate
 function Tilemap:getTile(x, y)
     return self.tiles[(y - 1) * self.TilemapWidth + x]

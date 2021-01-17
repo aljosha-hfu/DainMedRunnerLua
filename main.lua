@@ -3,6 +3,7 @@ tileMap = Tilemap:create()
 
 
 
+
 -- performs initialization of all objects and data needed by program
 function love.load()
 
@@ -14,6 +15,7 @@ end
 -- called every frame, with dt passed in as delta in time since last frame
 function love.update(dt)
   tileMap:update(dt)
+
 end
 
 -- called each frame, used to render to the screen

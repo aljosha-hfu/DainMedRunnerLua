@@ -14,16 +14,22 @@ end
 
 -- called every frame, with dt passed in as delta in time since last frame
 function love.update(dt)
+  --local nextTilemap = Tilemap:create()
   tileMap:update(dt)
+    --if math.floor(tileMap.resX) + 5 > tileMap.TilemapWidth then
+
+      --tileMap:attachnext(tileMap, nextTilemap)
+    --end
 
 end
 
 -- called each frame, used to render to the screen
 function love.draw()
   -- love.graphics.scale(0.1, 0.1)
-  -- clear screen using Mario background blue
   love.graphics.clear(108, 140, 255, 255)
   love.graphics.translate(math.floor(-tileMap.camX + 0.5), math.floor(-tileMap.camY + 0.5))
+
+
   -- renders our map object onto the screen
   tileMap:render()
 end

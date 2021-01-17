@@ -60,12 +60,13 @@ function Tilemap:create()
         spritesheet = love.graphics.newImage('graphics/tiles.png'),
         tileWidth = 32,
         tileHeight = 32,
-        TilemapWidth = 32,
+        TilemapWidth = 128,
         TilemapHeight = 32,
         tiles = {},
 
         camX = 0,
-        camY = -3
+        camY = -3,
+        resX = 0
     }
 
     -- generate a quad (individual frame/sprite) for each tile
@@ -97,7 +98,7 @@ function Tilemap:create()
     local gap = true
 
     while x < this.TilemapWidth do
-      if x < this.TilemapWidth - 3 then
+      if x < this.TilemapWidth - 3  then
 
         --spawning gaps
         if love.math.random(5) == 1 and gap == true then
@@ -198,9 +199,23 @@ function Tilemap:create()
           this:setTile(x+2, this.TilemapHeight/2 -1, TILE_HOUSE1_RIGHT_BOTTOM)
 
           for i=houseStart+1 , this.TilemapHeight/2-2 do
-            this:setTile(x, i, TILE_HOUSE1_LEFT_MIDDLE)
-            this:setTile(x+1, i, TILE_HOUSE1_MIDDLE_MIDDLE)
-            this:setTile(x+2, i, TILE_HOUSE1_RIGHT_MIDDLE)
+            if math.random(2) == 1 then
+              this:setTile(x, i, TILE_HOUSE2_LEFT_MIDDLE)
+            else
+              this:setTile(x, i, TILE_HOUSE1_LEFT_MIDDLE)
+            end
+
+            if math.random(2) == 1 then
+              this:setTile(x+1, i, TILE_HOUSE2_MIDDLE_MIDDLE)
+            else
+              this:setTile(x+1, i, TILE_HOUSE1_MIDDLE_MIDDLE)
+            end
+
+            if math.random(2) == 1 then
+              this:setTile(x+2, i, TILE_HOUSE2_RIGHT_MIDDLE)
+            else
+              this:setTile(x+2, i, TILE_HOUSE1_RIGHT_MIDDLE)
+            end
           end
           x = x + 4
         end
@@ -217,9 +232,24 @@ function Tilemap:create()
           this:setTile(x+2, this.TilemapHeight/2 -1, TILE_HOUSE2_RIGHT_BOTTOM)
 
           for i=houseStart+1 , this.TilemapHeight/2-2 do
-            this:setTile(x, i, TILE_HOUSE2_LEFT_MIDDLE)
-            this:setTile(x+1, i, TILE_HOUSE2_MIDDLE_MIDDLE)
-            this:setTile(x+2, i, TILE_HOUSE2_RIGHT_MIDDLE)
+            if math.random(2) == 1 then
+              this:setTile(x, i, TILE_HOUSE2_LEFT_MIDDLE)
+            else
+              this:setTile(x, i, TILE_HOUSE1_LEFT_MIDDLE)
+            end
+
+            if math.random(2) == 1 then
+              this:setTile(x+1, i, TILE_HOUSE2_MIDDLE_MIDDLE)
+            else
+              this:setTile(x+1, i, TILE_HOUSE1_MIDDLE_MIDDLE)
+            end
+
+            if math.random(2) == 1 then
+              this:setTile(x+2, i, TILE_HOUSE2_RIGHT_MIDDLE)
+            else
+              this:setTile(x+2, i, TILE_HOUSE1_RIGHT_MIDDLE)
+            end
+
           end
           x = x + 4
         end
@@ -245,9 +275,6 @@ function Tilemap:setTile(x, y, tile)
     self.tiles[(y - 1) * self.TilemapWidth + x] = tile
 end
 
-function Tilemap:update(dt)
-    self.camX = self.camX + dt * scrollSpeed
-end
 
 -- renders our Tilemap to the screen, to be called by main's render
 function Tilemap:render()
@@ -284,5 +311,17 @@ function generateQuads(atlas, tilewidth, tileheight)
 end
 
 function Tilemap:update(dt)
+  self.resX = self.camX
     self.camX = self.camX + dt * moveSpeed
 end
+
+--[[function Tilemap:attachnext(currentmap, tileMap)
+  local oldlength = currentmap.TilemapWidth
+  local newlength = currentmap.TilemapWidth + tileMap.TilemapWidth
+  currentmap.TilemapWidth = currentmap.TilemapWidth + tileMap.TilemapWidth
+  for x=oldlength, newlength do
+    for y=1, currentmap.TilemapHeight do
+      currentmap:setTile(x, y, tileMap:getTile(x-oldlength, y))
+    end
+  end
+end ]]

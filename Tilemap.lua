@@ -58,17 +58,18 @@ TILE_PLATFORM_RIGHT = 8
 
 local moveSpeed = 100
 
-function Tilemap:create()
+function Tilemap:create() --for creating maps with different difficulties
     local this = {
         spritesheet = love.graphics.newImage('graphics/tiles.png'),
         tileWidth = 32,
         tileHeight = 32,
-        TilemapWidth = 128,
+        TilemapWidth = 256,
         TilemapHeight = 32,
         tiles = {},
         gravity = 3,
         camX = 0,
         camY = -3
+
     }
 
       this.player = Player:create(this)
@@ -100,12 +101,14 @@ function Tilemap:create()
 
     local x = 20
     local gap = true
+    local gappercentage = love.math.random(2,10)
+    obstaclepercentage = love.math.random(2,10)
 
     while x < this.TilemapWidth  do
       if x < this.TilemapWidth - 20 then
 
         --spawning gaps
-        if love.math.random(5) == 1 and gap == true then
+        if love.math.random(100/gappercentage) == 1 and gap == true then
           this:setTile(x, this.TilemapHeight/2, TILE_EMPTY)
           this:setTile(x+1, this.TilemapHeight/2, TILE_EMPTY)
           this:setTile(x-1, this.TilemapHeight/2, TILE_GAP_TOP_RIGHT)
@@ -138,7 +141,7 @@ function Tilemap:create()
         end
 
         --spawning  different obstacles
-        if love.math.random(5) == 1 then
+        if love.math.random(100/obstaclepercentage) == 1 then
           local obstaclecounter = 1
           this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
           this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
@@ -147,7 +150,7 @@ function Tilemap:create()
           x = x + 7
         end
 
-        if love.math.random(5) == 1 then
+        if love.math.random(100/obstaclepercentage) == 1 then
           this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
           this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
           this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
@@ -157,7 +160,7 @@ function Tilemap:create()
           x = x + 8
         end
 
-        if love.math.random(5) == 1 then
+        if love.math.random(100/obstaclepercentage) == 1 then
             this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
             this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
             this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
@@ -169,7 +172,7 @@ function Tilemap:create()
             x = x + 9
           end
 
-          if love.math.random(5) == 1 then
+          if love.math.random(100/obstaclepercentage) == 1 then
             this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
             this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
             this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
@@ -185,7 +188,7 @@ function Tilemap:create()
             x = x + 11
           end
 
-        if love.math.random(5) == 1 then
+        if love.math.random(100/obstaclepercentage) == 1 then
           this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE3)
           x = x + 2
         end

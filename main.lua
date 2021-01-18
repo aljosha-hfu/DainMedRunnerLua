@@ -13,9 +13,11 @@ highScore = 0
 
 -- performs initialization of all objects and data needed by program
 function love.load()
+  love.window.setTitle("Simple endless runner HFU")
     tileMap:setGravity(6)
     gameOver = false
     gameSpeed = 200
+    tileMap:setSpeed(gameSpeed)
     score = 0
     progress = 0
     love.window.setMode(windowWidth, 600, {resizable = false, vsync = false, minwidth = 400, minheight = 300})

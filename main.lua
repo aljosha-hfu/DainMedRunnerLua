@@ -43,7 +43,6 @@ function love.update(dt)
     if -progress == tileMapWidth * 32 - windowWidth then
       tileMap = Tilemap:create()
       progress = 0
-      gameSpeed = gameSpeed + 50
       gameSpeed = gameSpeed + 25
       tileMap:setSpeed(gameSpeed)
     end

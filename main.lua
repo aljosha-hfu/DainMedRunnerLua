@@ -45,7 +45,7 @@ function love.draw()
     love.graphics.setBackgroundColor( 72/255, 240/255, 179/255)
     -- love.graphics.scale(0.1, 0.1)
     if gameOver then
-        love.graphics.draw(gameOverImage, 300, 250, 0, 2, 2)
+        love.graphics.draw(gameOverImage, 300, 250)
     else
         love.graphics.clear(108, 140, 255, 255)
         love.graphics.translate(math.floor(-tileMap.camX + 0.5), math.floor(-tileMap.camY + 0.5))

@@ -8,7 +8,7 @@ Player = {}
 Player.__index = Player
 
 local WALKING_SPEED = 100
-local JUMP_VELOCITY = 680
+local JUMP_VELOCITY = 670
 
 function Player:create(tileMap)
     local this = {
@@ -76,6 +76,8 @@ function Player:create(tileMap)
                 this.dy = -JUMP_VELOCITY
                 this.state = 'jumping'
                 this.animation = this.animations['jumping']
+                love.audio.pause(runningSound)
+                jumpingSound:play()
             end
 
             this:checkCollision()
@@ -107,6 +109,7 @@ function Player:create(tileMap)
                 this.state = 'walking'
                 this.animation = this.animations['walking']
                 this.y = this.y - (this.y % this.tileMap.tileHeight)
+                runningSound:play()
             end
             this:checkCollision()
         end

@@ -333,13 +333,15 @@ function Tilemap:collides(tile)
     -- define our collidable tiles
 
     local obstacles = {
-        TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3
+        TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3, TILE_GAP_WATER_TOP,
+        TILE_GAP_WATER_BOTTOM
     }
 
     local collidables = {
         TILE_GRASS_TOP, TILE_GAP_TOP_LEFT, TILE_GAP_TOP_RIGHT,
          TILE_PLATFORM_LEFT, TILE_PLATFORM_MIDDLE, TILE_PLATFORM_RIGHT,
-          TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3
+          TILE_OBSTACLE1, TILE_OBSTACLE2, TILE_OBSTACLE3, TILE_GAP_BOTTOM_LEFT,
+          TILE_GAP_BOTTOM_RIGHT
     }
 
     for _, v in ipairs(obstacles) do

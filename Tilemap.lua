@@ -60,7 +60,7 @@ function Tilemap:create()
         spritesheet = love.graphics.newImage('graphics/tiles.png'),
         tileWidth = 32,
         tileHeight = 32,
-        TilemapWidth = 32,
+        TilemapWidth = 128,
         TilemapHeight = 32,
         tiles = {},
         gravity = 3,
@@ -95,11 +95,11 @@ function Tilemap:create()
       end
     end
 
-    local x = 1
+    local x = 20
     local gap = true
 
-    while x < this.TilemapWidth do
-      if x < this.TilemapWidth - 3 then
+    while x < this.TilemapWidth  do
+      if x < this.TilemapWidth - 20 then
 
         --spawning gaps
         if love.math.random(5) == 1 and gap == true then
@@ -113,7 +113,7 @@ function Tilemap:create()
             this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
             this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
           end
-          x = x + 3
+          x = x + 5
           gap = false
         else
           gap = true
@@ -127,7 +127,7 @@ function Tilemap:create()
           this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
           this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
           this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_MIDDLE)
-          x = x + 6
+          x = x + 7
         end
 
         if love.math.random(5) == 1 then
@@ -137,7 +137,7 @@ function Tilemap:create()
           this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
           this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
           this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
-          x = x + 7
+          x = x + 8
         end
 
         if love.math.random(5) == 1 then
@@ -149,7 +149,7 @@ function Tilemap:create()
             this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
             this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_MIDDLE)
             this:setTile(x + 3, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
-            x = x + 8
+            x = x + 9
           end
 
           if love.math.random(5) == 1 then
@@ -165,7 +165,7 @@ function Tilemap:create()
             this:setTile(x + 6, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
             this:setTile(x + 4, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
             this:setTile(x + 5, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
-            x = x + 10
+            x = x + 11
           end
 
         if love.math.random(5) == 1 then

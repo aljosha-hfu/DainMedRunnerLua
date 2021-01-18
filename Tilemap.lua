@@ -143,17 +143,7 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                this:setTile(x + 1, this.TilemapHeight / 2 - 4, TILE_PLATFORM_MIDDLE)
-                x = x + 7
-            end
-
-            if love.math.random(100 / obstaclepercentage) == 1 then
-                this:setTile(x, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                this:setTile(x + 1, this.TilemapHeight / 2 - 4, TILE_PLATFORM_LEFT)
-                this:setTile(x + 2, this.TilemapHeight / 2 - 4, TILE_PLATFORM_RIGHT)
+                this:setTile(x + 1, this.TilemapHeight / 2 - love.math.random(3,4), TILE_PLATFORM_MIDDLE)
                 x = x + 8
             end
 
@@ -161,11 +151,10 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                this:setTile(x + 4, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                this:setTile(x + 1, this.TilemapHeight / 2 - 4, TILE_PLATFORM_LEFT)
-                this:setTile(x + 2, this.TilemapHeight / 2 - 4, TILE_PLATFORM_MIDDLE)
-                this:setTile(x + 3, this.TilemapHeight / 2 - 4, TILE_PLATFORM_RIGHT)
+                this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
+                local randomheight = love.math.random(3,4)
+                this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
+                this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
                 x = x + 9
             end
 
@@ -174,15 +163,32 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                this:setTile(x + 1, this.TilemapHeight / 2 - 4, TILE_PLATFORM_LEFT)
-                this:setTile(x + 2, this.TilemapHeight / 2 - 4, TILE_PLATFORM_RIGHT)
+                this:setTile(x + 4, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
+                local randomheight = love.math.random(3,5)
+                this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
+                this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_MIDDLE)
+                this:setTile(x + 3, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
+                x = x + 10
+            end
+
+            if love.math.random(100 / obstaclepercentage) == 1 then
+                this:setTile(x, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
+                this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
+                this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
+                this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
+                local randomheight = love.math.random(3,5)
+                this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
+                this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
 
                 this:setTile(x + 4, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 5, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                this:setTile(x + 6, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                this:setTile(x + 4, this.TilemapHeight / 2 - 4, TILE_PLATFORM_LEFT)
-                this:setTile(x + 5, this.TilemapHeight / 2 - 4, TILE_PLATFORM_RIGHT)
-                x = x + 11
+                this:setTile(x + 6, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
+                this:setTile(x + 7, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
+                this:setTile(x + 8, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
+                randomheight = love.math.random(3,6)
+                this:setTile(x + 6, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
+                this:setTile(x + 7, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
+                x = x + 14
             end
 
             if love.math.random(100 / obstaclepercentage) == 1 then

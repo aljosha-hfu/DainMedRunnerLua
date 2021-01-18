@@ -7,7 +7,6 @@ require 'Animation'
 Player = {}
 Player.__index = Player
 
-local WALKING_SPEED = 100
 local JUMP_VELOCITY = 670
 
 function Player:create(tileMap)
@@ -30,7 +29,7 @@ function Player:create(tileMap)
         state = 'walking',
 
         -- x and y velocity
-        dx = WALKING_SPEED,
+        dx = 200,
         dy = 0
     }
 
@@ -137,4 +136,8 @@ function Player:render()
     -- draw sprite with scale factor and offsets
     love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x),
         math.floor(self.y), 0, scaleX, 1, 0, 0)
+end
+
+function Player:setSpeed(speed)
+  self.dx = speed
 end

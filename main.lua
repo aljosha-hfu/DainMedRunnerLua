@@ -65,10 +65,18 @@ function love.draw()
       if score > highScore then
         highScore = score
       end
-        love.graphics.draw(gameOverImage, 300, 250)
-        love.graphics.print("Your score: " .. score, 300, 400)
-        love.graphics.print("Highscore: " .. highScore, 300, 440)
-        love.graphics.print("Press r to run again", 270, 500)
+        --love.graphics.draw(gameOverImage, 300, 250)
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 50)
+        love.graphics.setFont(font)
+        love.graphics.print("GAMEOVER", 200, 250)
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 15)
+        love.graphics.setFont(font)
+        love.graphics.print("Your score: " .. score, 278, 400)
+        love.graphics.print("Highscore: " .. highScore, 283, 440)
+        love.graphics.print("Press r to run again", 240, 500)
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 10)
+        love.graphics.setFont(font)
+        love.graphics.print("a simple game by Aljosha Vieth, Leandro Knecht and Umberto Falkenhagen", 50, 580)
     else
         love.graphics.clear(108, 140, 255, 255)
         love.graphics.translate(math.floor(-tileMap.camX + 0.5), math.floor(-tileMap.camY + 0.5))

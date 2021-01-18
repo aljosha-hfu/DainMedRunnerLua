@@ -64,7 +64,7 @@ local moveSpeed = 200
 
 function Tilemap:create() --for creating maps with different difficulties
     local this = {
-        spritesheet = love.graphics.newImage("graphics/tiles-debug.png"),
+        spritesheet = love.graphics.newImage("graphics/tiles.png"),
         tileWidth = 32,
         tileHeight = 32,
         TilemapWidth = tileMapWidth,

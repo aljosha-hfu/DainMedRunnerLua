@@ -77,7 +77,7 @@ function Tilemap:create() --for creating maps with different difficulties
     -- generate a quad (individual frame/sprite) for each tile
     this.tileSprites = generateQuads(this.spritesheet, 32, 32)
 
-    -- more OO boilerplate so we have access to class functions
+    --access to class functions
     setmetatable(this, self)
 
     -- first, fill Tilemap with empty tiles
@@ -113,20 +113,14 @@ function Tilemap:create() --for creating maps with different difficulties
           this:setTile(x+1, this.TilemapHeight/2, TILE_EMPTY)
           this:setTile(x-1, this.TilemapHeight/2, TILE_GAP_TOP_RIGHT)
           this:setTile(x+2, this.TilemapHeight/2, TILE_GAP_TOP_LEFT)
-          for y=this.TilemapHeight/2 +1, this.TilemapHeight do
+          for y=this.TilemapHeight/2 , this.TilemapHeight do
             if y == this.TilemapHeight/2 + 1 then
-              this:setTile(x, y, TILE_EMPTY)
-              this:setTile(x+1, y, TILE_EMPTY)
-              this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
-              this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
-            end
-            if y == this.TilemapHeight/2 + 2 then
               this:setTile(x, y, TILE_GAP_WATER_TOP)
               this:setTile(x+1, y, TILE_GAP_WATER_TOP)
               this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
               this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
             end
-            if y > this.TilemapHeight/2 + 2 then
+            if y > this.TilemapHeight/2 + 1 then
               this:setTile(x, y, TILE_GAP_WATER_BOTTOM)
               this:setTile(x+1, y, TILE_GAP_WATER_BOTTOM)
               this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
@@ -209,44 +203,58 @@ function Tilemap:create() --for creating maps with different difficulties
           x = x + 2
         end
 
-        --spawning varieties of house1
+        --spawning varieties of houses
         if love.math.random(5) == 1 then
           local houseStart = math.random(3, this.TilemapHeight / 2 - 3)
-          this:setTile(x, houseStart, TILE_HOUSE1_LEFT_ROOF)
-          this:setTile(x+1, houseStart, TILE_HOUSE1_MIDDLE_ROOF)
-          this:setTile(x+2, houseStart, TILE_HOUSE1_RIGHT_ROOF)
+          if love.math.random(2) == 1 then
+            this:setTile(x, houseStart, TILE_HOUSE1_LEFT_ROOF)
+            this:setTile(x+1, houseStart, TILE_HOUSE1_MIDDLE_ROOF)
+            this:setTile(x+2, houseStart, TILE_HOUSE1_RIGHT_ROOF)
+          else
+            this:setTile(x, houseStart, TILE_HOUSE2_LEFT_ROOF)
+            this:setTile(x+1, houseStart, TILE_HOUSE2_MIDDLE_ROOF)
+            this:setTile(x+2, houseStart, TILE_HOUSE2_RIGHT_ROOF)
+          end
 
-          this:setTile(x, this.TilemapHeight/2 -1, TILE_HOUSE1_LEFT_BOTTOM)
-          this:setTile(x+1, this.TilemapHeight/2 -1, TILE_HOUSE1_MIDDLE_BOTTOM)
-          this:setTile(x+2, this.TilemapHeight/2 -1, TILE_HOUSE1_RIGHT_BOTTOM)
+          if love.math.random(2) == 1 then
+            this:setTile(x, this.TilemapHeight/2 -1, TILE_HOUSE1_LEFT_BOTTOM)
+          else
+            this:setTile(x, this.TilemapHeight/2 -1, TILE_HOUSE2_LEFT_BOTTOM)
+          end
 
-          for i=houseStart+1 , this.TilemapHeight/2-2 do
-            this:setTile(x, i, TILE_HOUSE1_LEFT_MIDDLE)
-            this:setTile(x+1, i, TILE_HOUSE1_MIDDLE_MIDDLE)
-            this:setTile(x+2, i, TILE_HOUSE1_RIGHT_MIDDLE)
+          if love.math.random(2) == 1 then
+            this:setTile(x+1, this.TilemapHeight/2 -1, TILE_HOUSE1_MIDDLE_BOTTOM)
+          else
+            this:setTile(x+1, this.TilemapHeight/2 -1, TILE_HOUSE2_MIDDLE_BOTTOM)
+          end
+
+          if love.math.random(2) == 1 then
+            this:setTile(x+2, this.TilemapHeight/2 -1, TILE_HOUSE1_RIGHT_BOTTOM)
+          else
+            this:setTile(x+2, this.TilemapHeight/2 -1, TILE_HOUSE2_RIGHT_BOTTOM)
+          end
+
+          for i = houseStart + 1, this.TilemapHeight/2 - 2 do
+            if love.math.random(2) == 1 then
+              this:setTile(x, i, TILE_HOUSE1_LEFT_MIDDLE)
+            else
+              this:setTile(x, i, TILE_HOUSE2_LEFT_MIDDLE)
+            end
+
+            if love.math.random(2) == 1 then
+              this:setTile(x+1, i, TILE_HOUSE1_MIDDLE_MIDDLE)
+            else
+              this:setTile(x+1, i, TILE_HOUSE2_MIDDLE_MIDDLE)
+            end
+
+            if love.math.random(2) == 1 then
+              this:setTile(x+2, i, TILE_HOUSE1_RIGHT_MIDDLE)
+            else
+              this:setTile(x+2, i, TILE_HOUSE2_RIGHT_MIDDLE)
+            end
           end
           x = x + 4
         end
-
-        --spawning varieties of house2
-        if love.math.random(5) == 1 then
-          local houseStart = math.random(3, this.TilemapHeight / 2 - 3)
-          this:setTile(x, houseStart, TILE_HOUSE2_LEFT_ROOF)
-          this:setTile(x+1, houseStart, TILE_HOUSE2_MIDDLE_ROOF)
-          this:setTile(x+2, houseStart, TILE_HOUSE2_RIGHT_ROOF)
-
-          this:setTile(x, this.TilemapHeight/2 -1, TILE_HOUSE2_LEFT_BOTTOM)
-          this:setTile(x+1, this.TilemapHeight/2 -1, TILE_HOUSE2_MIDDLE_BOTTOM)
-          this:setTile(x+2, this.TilemapHeight/2 -1, TILE_HOUSE2_RIGHT_BOTTOM)
-
-          for i=houseStart+1 , this.TilemapHeight/2-2 do
-            this:setTile(x, i, TILE_HOUSE2_LEFT_MIDDLE)
-            this:setTile(x+1, i, TILE_HOUSE2_MIDDLE_MIDDLE)
-            this:setTile(x+2, i, TILE_HOUSE2_RIGHT_MIDDLE)
-          end
-          x = x + 4
-        end
-
       end
       x = x + 1
     end

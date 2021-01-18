@@ -30,6 +30,7 @@ end
 
 -- called each frame, used to render to the screen
 function love.draw()
+    love.graphics.setBackgroundColor( 72/255, 240/255, 179/255)
     -- love.graphics.scale(0.1, 0.1)
     if gameOver then
         love.graphics.draw(gameOverImage, 300, 250)

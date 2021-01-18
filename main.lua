@@ -21,7 +21,7 @@ function love.update(dt)
     end
     --if math.floor(tileMap.resX) + 5 > tileMap.TilemapWidth then
 
-    --tileMap:attachnext(tileMap, nextTilemap)
+    --tileMap =  nextTilemap
     --end
     -- reset all keys pressed and released this frame
     love.keyboard.keysPressed = {}

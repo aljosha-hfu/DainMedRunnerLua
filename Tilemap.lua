@@ -9,6 +9,9 @@ TILE_GAP_TOP_RIGHT = 3
 TILE_GAP_BOTTOM_LEFT = 12
 TILE_GAP_BOTTOM_RIGHT = 14
 
+TILE_GAP_WATER_TOP = 24
+TILE_GAP_WATER_BOTTOM = 23
+
 TILE_EMPTY = 78
 
 --tiles for the first house
@@ -108,10 +111,24 @@ function Tilemap:create()
           this:setTile(x-1, this.TilemapHeight/2, TILE_GAP_TOP_RIGHT)
           this:setTile(x+2, this.TilemapHeight/2, TILE_GAP_TOP_LEFT)
           for y=this.TilemapHeight/2 +1, this.TilemapHeight do
-            this:setTile(x, y, TILE_EMPTY)
-            this:setTile(x+1, y, TILE_EMPTY)
-            this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
-            this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
+            if y == this.TilemapHeight/2 + 1 then
+              this:setTile(x, y, TILE_EMPTY)
+              this:setTile(x+1, y, TILE_EMPTY)
+              this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
+              this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
+            end
+            if y == this.TilemapHeight/2 + 2 then
+              this:setTile(x, y, TILE_GAP_WATER_TOP)
+              this:setTile(x+1, y, TILE_GAP_WATER_TOP)
+              this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
+              this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
+            end
+            if y > this.TilemapHeight/2 + 2 then
+              this:setTile(x, y, TILE_GAP_WATER_BOTTOM)
+              this:setTile(x+1, y, TILE_GAP_WATER_BOTTOM)
+              this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
+              this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
+            end
           end
           x = x + 5
           gap = false

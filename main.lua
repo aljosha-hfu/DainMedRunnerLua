@@ -11,6 +11,10 @@ function love.load()
     -- makes upscaling look pixel-y instead of blurry
     love.graphics.setDefaultFilter("nearest", "nearest")
     gameOverImage = love.graphics.newImage("graphics/game_over.png")
+    music = love.audio.newSource("audio/music.mp3", "stream")
+    music:setLooping(true)
+    music:setVolume(0.6)
+    music:play()
 end
 
 -- called every frame, with dt passed in as delta in time since last frame
@@ -18,6 +22,8 @@ function love.update(dt)
     --local nextTilemap = Tilemap:create()
     if gameOver == false then
         tileMap:update(dt)
+    else
+      music:stop()
     end
     --if math.floor(tileMap.resX) + 5 > tileMap.TilemapWidth then
 

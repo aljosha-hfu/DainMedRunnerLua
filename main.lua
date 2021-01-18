@@ -44,6 +44,7 @@ function love.update(dt)
       tileMap = Tilemap:create()
       progress = 0
       gameSpeed = gameSpeed + 50
+      gameSpeed = gameSpeed + 25
       tileMap:setSpeed(gameSpeed)
     end
     if gameOver == false then

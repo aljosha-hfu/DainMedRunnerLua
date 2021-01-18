@@ -113,20 +113,14 @@ function Tilemap:create() --for creating maps with different difficulties
           this:setTile(x+1, this.TilemapHeight/2, TILE_EMPTY)
           this:setTile(x-1, this.TilemapHeight/2, TILE_GAP_TOP_RIGHT)
           this:setTile(x+2, this.TilemapHeight/2, TILE_GAP_TOP_LEFT)
-          for y=this.TilemapHeight/2 +1, this.TilemapHeight do
+          for y=this.TilemapHeight/2 , this.TilemapHeight do
             if y == this.TilemapHeight/2 + 1 then
-              this:setTile(x, y, TILE_EMPTY)
-              this:setTile(x+1, y, TILE_EMPTY)
-              this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
-              this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
-            end
-            if y == this.TilemapHeight/2 + 2 then
               this:setTile(x, y, TILE_GAP_WATER_TOP)
               this:setTile(x+1, y, TILE_GAP_WATER_TOP)
               this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)
               this:setTile(x+2, y, TILE_GAP_BOTTOM_LEFT)
             end
-            if y > this.TilemapHeight/2 + 2 then
+            if y > this.TilemapHeight/2 + 1 then
               this:setTile(x, y, TILE_GAP_WATER_BOTTOM)
               this:setTile(x+1, y, TILE_GAP_WATER_BOTTOM)
               this:setTile(x-1, y, TILE_GAP_BOTTOM_RIGHT)

@@ -119,54 +119,55 @@ function Tilemap:create()
           x = x + 2
         end
 
-        --spawning obstacles
-        local randomobstacle = love.math.random(2)
-        if randomobstacle == 1 then
+        --spawning  different obstacles
+        if love.math.random(5) == 1 then
           local obstaclecounter = 1
           this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-          this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-          obstaclecounter = obstaclecounter + 1
-          if love.math.random(2) == 1 then
+          this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+          this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+          this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_MIDDLE)
+          x = x + 6
+        end
+
+        if love.math.random(5) == 1 then
+          this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+          this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+          this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+          this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+          this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+          this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+          x = x + 7
+        end
+
+        if love.math.random(5) == 1 then
             this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
             this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-            this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-            obstaclecounter = obstaclecounter + 2
-            if love.math.random(2) == 1 then
-              this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-              this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-              this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-              this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-              this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
-              this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
-              obstaclecounter = obstaclecounter + 1
-              if love.math.random(2) == 1 then
-                this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-                this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                this:setTile(x + 4, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-                this:setTile(x+ 1, this.TilemapHeight/2 -4, TILE_EMPTY)
-                this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
-                this:setTile(x + 3, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
-                obstaclecounter = obstaclecounter + 1
-                if love.math.random(2) == 1 then
-                  this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-                  this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                  this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                  this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                  this:setTile(x + 4, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
-                  this:setTile(x + 5, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
-                  this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
-                  this:setTile(x + 3, this.TilemapHeight/2 -4, TILE_PLATFORM_MIDDLE)
-                  this:setTile(x + 4, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
-                  obstaclecounter = obstaclecounter + 1
-                end
-              end
-            end
+            this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 4, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+            this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+            this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_MIDDLE)
+            this:setTile(x + 3, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+            x = x + 8
           end
-          x = x + obstaclecounter + 1
 
-        elseif randomobstacle == 2 then
+          if love.math.random(5) == 1 then
+            this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+            this:setTile(x + 1, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 2, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 3, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 1, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+            this:setTile(x + 2, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+
+            this:setTile(x + 4, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 5, this.TilemapHeight/2 -1, TILE_OBSTACLE2)
+            this:setTile(x + 6, this.TilemapHeight/2 -1, TILE_OBSTACLE1)
+            this:setTile(x + 4, this.TilemapHeight/2 -4, TILE_PLATFORM_LEFT)
+            this:setTile(x + 5, this.TilemapHeight/2 -4, TILE_PLATFORM_RIGHT)
+            x = x + 10
+          end
+
+        if love.math.random(5) == 1 then
           this:setTile(x, this.TilemapHeight/2 -1, TILE_OBSTACLE3)
           x = x + 2
         end

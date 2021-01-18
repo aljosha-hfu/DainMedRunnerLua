@@ -8,7 +8,7 @@ Player = {}
 Player.__index = Player
 
 local WALKING_SPEED = 100
-local JUMP_VELOCITY = 650
+local JUMP_VELOCITY = 680
 
 function Player:create(tileMap)
     local this = {

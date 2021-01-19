@@ -339,13 +339,16 @@ end
 -- return whether a given tile is collidable
 function Tilemap:collides(tile)
     -- define our collidable tiles
+    if tile == TILE_GAP_WATER_TOP or tile == TILE_GAP_WATER_BOTTOM then
+      waterSound:play()
+      gameOver = true
+      return true
+    end
 
     local obstacles = {
         TILE_OBSTACLE1,
         TILE_OBSTACLE2,
-        TILE_OBSTACLE3,
-        TILE_GAP_WATER_TOP,
-        TILE_GAP_WATER_BOTTOM
+        TILE_OBSTACLE3
     }
 
     local collidables = {
@@ -365,6 +368,7 @@ function Tilemap:collides(tile)
 
     for _, v in ipairs(obstacles) do
         if tile == v then
+            deathSound:play()
             gameOver = true
             return true
         end

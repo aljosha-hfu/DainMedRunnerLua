@@ -32,6 +32,8 @@ function love.load()
     runningSound:setLooping(true)
     runningSound:play()
     jumpingSound = love.audio.newSource("audio/jump.wav", "static")
+    waterSound = love.audio.newSource("audio/water.wav", "static")
+    deathSound = love.audio.newSource("audio/death.wav", "static")
 
     font = love.graphics.newFont("graphics/pcsenior.ttf", 15)
     love.graphics.setFont(font)
@@ -49,7 +51,8 @@ function love.update(dt)
     if gameOver == false then
         tileMap:update(dt)
     else
-      love.audio.stop()
+      runningSound:stop()
+      music:stop()
     end
     --if math.floor(tileMap.resX) + 5 > tileMap.TilemapWidth then
 
@@ -78,7 +81,7 @@ function love.draw()
         love.graphics.print("Press r to run again", 240, 500)
         font = love.graphics.newFont("graphics/pcsenior.ttf", 10)
         love.graphics.setFont(font)
-        love.graphics.print("a simple game by Aljosha Vieth, Leandro Knecht and Umberto Falkenhagen", 50, 580)
+        -- love.graphics.print("a simple game by Aljosha Vieth, Leandro Knecht and Umberto Falkenhagen", 50, 580)
     else
         love.graphics.clear(108, 140, 255, 255)
         love.graphics.translate(math.floor(-tileMap.camX + 0.5), math.floor(-tileMap.camY + 0.5))

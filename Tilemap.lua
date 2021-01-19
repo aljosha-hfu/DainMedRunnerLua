@@ -352,6 +352,7 @@ function Tilemap:collides(tile)
         TILE_PLATFORM_LEFT,
         TILE_PLATFORM_MIDDLE,
         TILE_PLATFORM_RIGHT,
+        TILE_PLATFORM_SINGLE,
         TILE_OBSTACLE1,
         TILE_OBSTACLE2,
         TILE_OBSTACLE3,

@@ -142,6 +142,7 @@ function love.keypressed(key)
     end
     if key == "r" then
       if gameOver then
+        showCredits = false
         tileMap = Tilemap:create()
         love.load()
       end

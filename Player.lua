@@ -1,7 +1,3 @@
---[[
-    Represents our player in the game, with its own sprite.
-]]
-
 require 'Animation'
 
 Player = {}

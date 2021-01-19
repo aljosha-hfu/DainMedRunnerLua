@@ -80,7 +80,7 @@ function Tilemap:create() --for creating maps with different difficulties
     this.player = Player:create(this)
 
     -- generate a quad (individual frame/sprite) for each tile
-    this.tileSprites = generateQuads(this.spritesheet, 32, 32)
+    this.tileSprites = generateQuads(this.spritesheet, this.tileWidth, this.tileHeight)
 
     --access to class functions
     setmetatable(this, self)
@@ -115,23 +115,26 @@ function Tilemap:create() --for creating maps with different difficulties
             if love.math.random(100 / gappercentage) == 1 and gap == true then
                 this:setTile(x, this.TilemapHeight / 2, TILE_EMPTY)
                 this:setTile(x + 1, this.TilemapHeight / 2, TILE_EMPTY)
+                this:setTile(x + 2, this.TilemapHeight / 2, TILE_EMPTY)
                 this:setTile(x - 1, this.TilemapHeight / 2, TILE_GAP_TOP_RIGHT)
-                this:setTile(x + 2, this.TilemapHeight / 2, TILE_GAP_TOP_LEFT)
+                this:setTile(x + 3, this.TilemapHeight / 2, TILE_GAP_TOP_LEFT)
                 for y = this.TilemapHeight / 2, this.TilemapHeight do
                     if y == this.TilemapHeight / 2 + 1 then
                         this:setTile(x, y, TILE_GAP_WATER_TOP)
                         this:setTile(x + 1, y, TILE_GAP_WATER_TOP)
+                        this:setTile(x + 2, y, TILE_GAP_WATER_TOP)
                         this:setTile(x - 1, y, TILE_GAP_BOTTOM_RIGHT)
-                        this:setTile(x + 2, y, TILE_GAP_BOTTOM_LEFT)
+                        this:setTile(x + 3, y, TILE_GAP_BOTTOM_LEFT)
                     end
                     if y > this.TilemapHeight / 2 + 1 then
                         this:setTile(x, y, TILE_GAP_WATER_BOTTOM)
                         this:setTile(x + 1, y, TILE_GAP_WATER_BOTTOM)
+                        this:setTile(x + 2, y, TILE_GAP_WATER_BOTTOM)
                         this:setTile(x - 1, y, TILE_GAP_BOTTOM_RIGHT)
-                        this:setTile(x + 2, y, TILE_GAP_BOTTOM_LEFT)
+                        this:setTile(x + 3, y, TILE_GAP_BOTTOM_LEFT)
                     end
                 end
-                x = x + 5
+                x = x + 6
                 gap = false
             else
                 gap = true

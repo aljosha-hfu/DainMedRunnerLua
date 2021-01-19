@@ -22,7 +22,6 @@ function love.load()
     score = 0
     progress = 0
     love.window.setMode(windowWidth, 600, {resizable = false, vsync = false, minwidth = 400, minheight = 300})
-    -- makes upscaling look pixel-y instead of blurry
     love.graphics.setDefaultFilter("nearest", "nearest")
     gameOverImage = love.graphics.newImage("graphics/game_over.png")
     music = love.audio.newSource("audio/music.mp3", "stream")
@@ -55,10 +54,6 @@ function love.update(dt)
       runningSound:stop()
       music:stop()
     end
-    --if math.floor(tileMap.resX) + 5 > tileMap.TilemapWidth then
-
-    --tileMap =  nextTilemap
-    --end
     -- reset all keys pressed and released this frame
     love.keyboard.keysPressed = {}
     love.keyboard.keysReleased = {}

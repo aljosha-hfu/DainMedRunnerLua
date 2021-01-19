@@ -59,11 +59,10 @@ TILE_PLATFORM_MIDDLE = 7
 TILE_PLATFORM_RIGHT = 8
 TILE_PLATFORM_SINGLE = 9
 
+-- inital map speed (changed by main.lua in case new map is generated)
 local moveSpeed = 200
 
-
-
-function Tilemap:create() --for creating maps with different difficulties
+function Tilemap:create()
     local this = {
         spritesheet = love.graphics.newImage("graphics/tiles.png"),
         tileWidth = 32,
@@ -77,6 +76,7 @@ function Tilemap:create() --for creating maps with different difficulties
         progress = 0
     }
 
+    -- create a player
     this.player = Player:create(this)
 
     -- generate a quad (individual frame/sprite) for each tile
@@ -104,7 +104,7 @@ function Tilemap:create() --for creating maps with different difficulties
         end
     end
 
-    local x = 25 -- 25 * 32 = 800 = screen width
+    local x = 25 -- 25 * 32 = 800 = screen width (generate no obstacles or background structures in the first and last screen)
     local gap = true
     local gappercentage = love.math.random(2, 10)
     obstaclepercentage = love.math.random(2, 10)
@@ -147,7 +147,7 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                this:setTile(x + 1, this.TilemapHeight / 2 - love.math.random(3,4), TILE_PLATFORM_SINGLE)
+                this:setTile(x + 1, this.TilemapHeight / 2 - love.math.random(3, 4), TILE_PLATFORM_SINGLE)
                 x = x + 8
             end
 
@@ -156,7 +156,7 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                local randomheight = love.math.random(3,4)
+                local randomheight = love.math.random(3, 4)
                 this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
                 this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
                 x = x + 9
@@ -168,7 +168,7 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 4, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                local randomheight = love.math.random(3,5)
+                local randomheight = love.math.random(3, 5)
                 this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
                 this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_MIDDLE)
                 this:setTile(x + 3, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
@@ -180,7 +180,7 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-                local randomheight = love.math.random(3,5)
+                local randomheight = love.math.random(3, 5)
                 this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
                 this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
 
@@ -189,7 +189,7 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x + 6, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 7, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 8, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-                randomheight = love.math.random(3,6)
+                randomheight = love.math.random(3, 6)
                 this:setTile(x + 6, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
                 this:setTile(x + 7, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
                 x = x + 14
@@ -280,13 +280,12 @@ function Tilemap:getTile(x, y)
     return self.tiles[(y - 1) * self.TilemapWidth + x]
 end
 
--- sets a tile at a given x-y coordinate to an integer value
+-- sets a tile at a given x-y coordinate
 function Tilemap:setTile(x, y, tile)
     self.tiles[(y - 1) * self.TilemapWidth + x] = tile
 end
 
-
--- renders our Tilemap to the screen, to be called by main's render
+-- renders Tilemap to screen
 function Tilemap:render()
     for y = 1, self.TilemapHeight do
         for x = 1, self.TilemapWidth do
@@ -333,24 +332,25 @@ function Tilemap:update(dt)
     self.camX = self.camX + dt * moveSpeed
     self.progress = self.progress + moveSpeed
     progress = self.progress
-
 end
 
--- return whether a given tile is collidable
+-- check if specific tile is colidable
 function Tilemap:collides(tile)
-    -- define our collidable tiles
+    -- water tiles (end the game, play water sound)
     if tile == TILE_GAP_WATER_TOP or tile == TILE_GAP_WATER_BOTTOM then
-      waterSound:play()
-      gameOver = true
-      return true
+        waterSound:play()
+        gameOver = true
+        return true
     end
 
+    -- obstacle tiles (end the game, play death sound)
     local obstacles = {
         TILE_OBSTACLE1,
         TILE_OBSTACLE2,
         TILE_OBSTACLE3
     }
 
+    -- all objects we can "walk" on
     local collidables = {
         TILE_GRASS_TOP,
         TILE_GAP_TOP_LEFT,
@@ -366,6 +366,7 @@ function Tilemap:collides(tile)
         TILE_GAP_BOTTOM_RIGHT
     }
 
+    -- game over when hitting obstacle
     for _, v in ipairs(obstacles) do
         if tile == v then
             deathSound:play()
@@ -374,7 +375,7 @@ function Tilemap:collides(tile)
         end
     end
 
-    -- iterate and return true if our tile type matches
+    -- we can walk
     for _, v in ipairs(collidables) do
         if tile == v then
             return true
@@ -384,11 +385,13 @@ function Tilemap:collides(tile)
     return false
 end
 
+-- sets the speed of map AND player
 function Tilemap:setSpeed(speed)
-  self.player:setSpeed(speed)
-  moveSpeed = speed
+    self.player:setSpeed(speed)
+    moveSpeed = speed
 end
 
+-- sets the gravity (should be increased over time to support jumping behavior)
 function Tilemap:setGravity(gravity)
-  self.gravity = gravity
+    self.gravity = gravity
 end

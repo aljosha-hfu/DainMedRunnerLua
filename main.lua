@@ -9,11 +9,12 @@ score = 0
 windowWidth = 800
 gameSpeed = 200
 highScore = 0
+showCredits = false
 
 
 -- performs initialization of all objects and data needed by program
 function love.load()
-  love.window.setTitle("Simple endless runner HFU")
+    love.window.setTitle("Simple endless runner HFU")
     tileMap:setGravity(6)
     gameOver = false
     gameSpeed = 200
@@ -66,22 +67,46 @@ end
 
 -- called each frame, used to render to the screen
 function love.draw()
-    if gameOver then
+    if gameOver and showCredits == false then
       if score > highScore then
         highScore = score
       end
         --love.graphics.draw(gameOverImage, 300, 250)
         font = love.graphics.newFont("graphics/pcsenior.ttf", 50)
         love.graphics.setFont(font)
-        love.graphics.print("GAMEOVER", 200, 250)
+        love.graphics.printf("GAMEOVER", 0, 250, 800, "center")
         font = love.graphics.newFont("graphics/pcsenior.ttf", 15)
         love.graphics.setFont(font)
-        love.graphics.print("Your score: " .. score, 278, 400)
-        love.graphics.print("Highscore: " .. highScore, 283, 440)
-        love.graphics.print("Press r to run again", 240, 500)
+        love.graphics.printf("Your score: " .. score, 0, 400, 800, "center")
+        love.graphics.printf("Highscore: " .. highScore, 0, 420, 800, "center")
+        love.graphics.printf("Press r to run again", 0, 500, 800, "center")
         font = love.graphics.newFont("graphics/pcsenior.ttf", 10)
         love.graphics.setFont(font)
-        -- love.graphics.print("a simple game by Aljosha Vieth, Leandro Knecht and Umberto Falkenhagen", 50, 580)
+        love.graphics.printf("Press c to show credits", 0, 480, 800, "center")
+    else if showCredits then
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 50)
+        love.graphics.setFont(font)
+        love.graphics.printf("CREDITS", 0, 50, 800, "center")
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 30)
+        love.graphics.setFont(font)
+        love.graphics.printf("Music and sound effects:", 0, 200, 800, "center")
+        love.graphics.printf("Font:", 0, 380, 800, "center")
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 15)
+        love.graphics.setFont(font)
+        love.graphics.printf("moonlight-beach by kevin macleod from filmmusic.io", 0, 240, 800, "center")
+        love.graphics.printf("running in grass by EvanSki", 0, 260, 800, "center")
+        love.graphics.printf("Jump to grass by 14FPanskaBubik_Lukas", 0, 280, 800, "center")
+        love.graphics.printf("Water splash by nilbul", 0, 300, 800, "center")
+        love.graphics.printf("Shatter by Q.K.", 0, 320, 800, "center")
+        love.graphics.printf("pcsenior by zone38.net", 0, 420, 800, "center")
+        love.graphics.printf("Press r to run again", 0, 500, 800, "center")
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 10)
+        love.graphics.setFont(font)
+        love.graphics.printf("a simple game by", 0, 120, 800, "center")
+        love.graphics.printf("Aljosha Vieth, Leandro Knecht & Umberto Falkenhagen @ Furtwangen University", 0, 140, 800, "center")
+
+        font = love.graphics.newFont("graphics/pcsenior.ttf", 10)
+        love.graphics.setFont(font)
     else
         love.graphics.clear(108, 140, 255, 255)
         love.graphics.translate(math.floor(-tileMap.camX + 0.5), math.floor(-tileMap.camY + 0.5))
@@ -91,6 +116,7 @@ function love.draw()
         tileMap:render()
         love.graphics.print(score, 650 +math.floor(tileMap.camX + 0.5), 10)
     end
+  end
 
 end
 
@@ -117,16 +143,17 @@ function love.keypressed(key)
     if key == "r" then
       if gameOver then
         tileMap = Tilemap:create()
-
         love.load()
       end
     end
-
+    if key == "c" then
+      if gameOver then
+        showCredits = true
+      end
+    end
     love.keyboard.keysPressed[key] = true
+
 end
-
-
-
 
 -- called whenever a key is released
 function love.keyreleased(key)

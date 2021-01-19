@@ -11,3 +11,6 @@ Water splash by [nilbul](https://freesound.org/people/nilbul/sounds/404829/)
 Shatter by [Q.K.](https://freesound.org/people/Q.K./sounds/56262/)
 
 pcsenior font by zone38.net
+
+
+some logic based on the presentation of [CS50](https://www.youtube.com/watch?v=3k4CMAaNCuk)

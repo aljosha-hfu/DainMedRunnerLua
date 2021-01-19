@@ -57,6 +57,7 @@ TILE_OBSTACLE3 = 27
 TILE_PLATFORM_LEFT = 6
 TILE_PLATFORM_MIDDLE = 7
 TILE_PLATFORM_RIGHT = 8
+TILE_PLATFORM_SINGLE = 9
 
 local moveSpeed = 200
 
@@ -143,13 +144,8 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-<<<<<<< Updated upstream
-                this:setTile(x + 1, this.TilemapHeight / 2 - love.math.random(3,4), TILE_PLATFORM_MIDDLE)
+                this:setTile(x + 1, this.TilemapHeight / 2 - love.math.random(3,4), TILE_PLATFORM_SINGLE)
                 x = x + 8
-=======
-                this:setTile(x + 1, this.TilemapHeight / 2 - 3, TILE_PLATFORM_MIDDLE)
-                x = x + 7
->>>>>>> Stashed changes
             end
 
             if love.math.random(100 / obstaclepercentage) == 1 then
@@ -181,30 +177,19 @@ function Tilemap:create() --for creating maps with different difficulties
                 this:setTile(x + 1, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 2, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 3, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
-<<<<<<< Updated upstream
                 local randomheight = love.math.random(3,5)
                 this:setTile(x + 1, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
                 this:setTile(x + 2, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
-=======
-                this:setTile(x + 1, this.TilemapHeight / 2 - 3, TILE_PLATFORM_LEFT)
-                this:setTile(x + 2, this.TilemapHeight / 2 - 3, TILE_PLATFORM_RIGHT)
->>>>>>> Stashed changes
 
                 this:setTile(x + 4, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 5, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 6, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 7, this.TilemapHeight / 2 - 1, TILE_OBSTACLE2)
                 this:setTile(x + 8, this.TilemapHeight / 2 - 1, TILE_OBSTACLE1)
-<<<<<<< Updated upstream
                 randomheight = love.math.random(3,6)
                 this:setTile(x + 6, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_LEFT)
                 this:setTile(x + 7, this.TilemapHeight / 2 - randomheight, TILE_PLATFORM_RIGHT)
                 x = x + 14
-=======
-                this:setTile(x + 6, this.TilemapHeight / 2 - 4, TILE_PLATFORM_LEFT)
-                this:setTile(x + 7, this.TilemapHeight / 2 - 4, TILE_PLATFORM_RIGHT)
-                x = x + 13
->>>>>>> Stashed changes
             end
 
             if love.math.random(100 / obstaclepercentage) == 1 then

@@ -1,9 +1,12 @@
-require "Animation"
-
 Player = {}
 Player.__index = Player
 
-local JUMP_VELOCITY = 670
+local jumpHeight = 700
+
+texture = love.graphics.newImage("graphics/char_tiles.png")
+currentFrame = love.graphics.newQuad(0, 32, 32, 32, texture:getDimensions())
+lengthOfCurrentFrame = 1
+jumpAnimation = false
 
 function Player:create(tileMap)
     local this = {
@@ -11,70 +14,31 @@ function Player:create(tileMap)
         y = 0,
         width = 32,
         height = 32,
-        -- reference to tileMap
         tileMap = tileMap,
-        texture = love.graphics.newImage("graphics/char_tiles.png"),
-        -- current animation frame
-        currentFrame = nil,
-        -- current animation being updated
-        animation = nil,
-        -- used to determine behavior and animations
         state = "walking",
-        -- x and y velocity (y never used)
-        dx = 200,
-        dy = 0
+        playerSpeed = 200,
+        playerHeight = 0
     }
 
     -- position on top of tileMap tiles
     this.x = love.graphics.getWidth() / 2
-    this.y = tileMap.tileHeight * ((tileMap.TilemapHeight - 2) / 2) - this.height
+    this.y = tileMap.tileHeight * ((tileMap.tilemapHeight - 2) / 2) - this.height
 
-    -- initialize all player animations
-    this.animations = {
-        ["walking"] = Animation:create(
-            {
-                texture = this.texture,
-                frames = {
-                    love.graphics.newQuad(0, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(32, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(64, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(96, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(128, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(160, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(192, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(224, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(256, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(288, 32, 32, 32, this.texture:getDimensions()),
-                    love.graphics.newQuad(320, 32, 32, 32, this.texture:getDimensions())
-                }
-            }
-        ),
-        ["jumping"] = Animation:create(
-            {
-                texture = this.texture,
-                frames = {
-                    love.graphics.newQuad(0, 0, 32, 32, this.texture:getDimensions())
-                }
-            }
-        )
-    }
 
-    -- initialize animation and current frame we should render
-    this.animation = this.animations["walking"]
-    this.currentFrame = this.animation:getCurrentFrame()
+    currentFrame = getNextFrame()
 
     -- behavior tileMap we can call based on player state
     this.behaviors = {
         ["walking"] = function(dt)
-            -- keep track of input to switch movement while walking, or reset
-            if love.keyboard.wasPressed("space") then
-                this.dy = -JUMP_VELOCITY
+            -- check if player should jump
+            if jump then
+                jumpAnimation = true
+                this.playerHeight = -jumpHeight
                 this.state = "jumping"
-                this.animation = this.animations["jumping"]
                 love.audio.pause(runningSound)
                 jumpingSound:play()
+                jump = false
             end
-
             this:checkCollision()
             -- check if there's a tile directly beneath us
             if
@@ -83,12 +47,11 @@ function Player:create(tileMap)
              then
                 -- if so, reset velocity and position and change state
                 this.state = "jumping"
-                this.animation = this.animations["jumping"]
             end
         end,
         ["jumping"] = function(dt)
             -- apply tileMap's gravity before y velocity
-            this.dy = this.dy + this.tileMap.gravity
+            this.playerHeight = this.playerHeight + this.tileMap.gravity
 
             -- check if there's a tile directly beneath us
             if
@@ -97,9 +60,8 @@ function Player:create(tileMap)
              then
                 -- if so, reset velocity and position and change state
                 -- play running sound
-                this.dy = 0
+                this.playerHeight = 0
                 this.state = "walking"
-                this.animation = this.animations["walking"]
                 this.y = this.y - (this.y % this.tileMap.tileHeight)
                 runningSound:play()
             end
@@ -110,12 +72,52 @@ function Player:create(tileMap)
     return this
 end
 
+
+
+function getNextFrame()
+  functionCalled = functionCalled +1
+  local walkingFrames = {
+    love.graphics.newQuad(0, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(32, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(64, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(96, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(128, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(160, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(192, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(224, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(256, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(288, 32, 32, 32, texture:getDimensions()),
+    love.graphics.newQuad(320, 32, 32, 32, texture:getDimensions())
+  }
+
+  if jumpAnimation then
+    lengthOfCurrentFrame = -200
+    lastFrameDisplayed = 12
+    jumpAnimation = false
+    return love.graphics.newQuad(0, 0, 32, 32, texture:getDimensions())
+  end
+if lengthOfCurrentFrame == 15 then
+  lengthOfCurrentFrame = 1
+  if lastFrameDisplayed > 10 then
+    lastFrameDisplayed = 1
+    return walkingFrames[1]
+  else
+    lastFrameDisplayed = lastFrameDisplayed + 1
+    return walkingFrames[lastFrameDisplayed]
+  end
+else
+  lengthOfCurrentFrame = lengthOfCurrentFrame + 1
+  return currentFrame
+end
+
+end
+
+
 function Player:update(dt)
     self.behaviors[self.state](dt)
-    self.animation:update(dt)
-    self.currentFrame = self.animation:getCurrentFrame()
-    self.x = self.x + self.dx * dt
-    self.y = self.y + self.dy * dt
+    currentFrame = getNextFrame()
+    self.x = self.x + self.playerSpeed * dt
+    self.y = self.y + self.playerHeight * dt
 end
 
 function Player:checkCollision()
@@ -125,10 +127,10 @@ end
 
 function Player:render()
     -- draw player in center
-    love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x), math.floor(self.y), 0, scaleX, 1, 0, 0)
+    love.graphics.draw(texture, currentFrame, math.floor(self.x), math.floor(self.y), 0, scaleX, 1, 0, 0)
 end
 
 function Player:setSpeed(speed)
     -- function to set the speed of the player (same as map speed)
-    self.dx = speed
+    self.playerSpeed = speed
 end

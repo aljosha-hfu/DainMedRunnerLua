@@ -96,6 +96,11 @@ function getNextFrame()
     jumpAnimation = false
     return love.graphics.newQuad(0, 0, 32, 32, texture:getDimensions())
   end
+  if lengthOfCurrentFrame == -100 then
+    lengthOfCurrentFrame = lengthOfCurrentFrame + 1
+    return love.graphics.newQuad(32, 0, 32, 32, texture:getDimensions())
+  end
+
 if lengthOfCurrentFrame == 15 then
   lengthOfCurrentFrame = 1
   if lastFrameDisplayed > 10 then

@@ -80,7 +80,6 @@ function Tilemap:create()
     -- generate a quad (individual frame/sprite) for each tile
     this.tileSprites = generateQuads(this.spritesheet, this.tileWidth, this.tileHeight)
 
-
     setmetatable(this, self)
 
     -- fill Tilemap with empty tiles

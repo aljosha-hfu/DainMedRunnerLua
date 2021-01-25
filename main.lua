@@ -7,7 +7,7 @@ gameOver = false
 showCredits = false
 jump = false
 lastFrameDisplayed = 1
-functionCalled = 0
+tileMap = nil
 
 
 
@@ -110,8 +110,6 @@ function move()
     -- print the score to different coordinate each time, so the score text
     -- moves at the same speed as map and player to look fixed
     love.graphics.print(score, 650 + math.floor(tileMap.camX + 0.5), 10)
-    love.graphics.print(lastFrameDisplayed, 500 + math.floor(tileMap.camX + 0.5), 10)
-    love.graphics.print(lengthOfCurrentFrame, 400 + math.floor(tileMap.camX + 0.5), 10)
 end
 
 function drawGameOverScreen()

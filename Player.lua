@@ -75,7 +75,7 @@ end
 
 
 function getNextFrame()
-  functionCalled = functionCalled +1
+  -- all walking animation assets
   local walkingFrames = {
     love.graphics.newQuad(0, 32, 32, 32, texture:getDimensions()),
     love.graphics.newQuad(32, 32, 32, 32, texture:getDimensions()),
@@ -90,18 +90,23 @@ function getNextFrame()
     love.graphics.newQuad(320, 32, 32, 32, texture:getDimensions())
   }
 
+-- jump
   if jumpAnimation then
+    -- set to -200 to display this frame longer than usual
     lengthOfCurrentFrame = -200
     lastFrameDisplayed = 12
     jumpAnimation = false
+    -- return jump asset
     return love.graphics.newQuad(0, 0, 32, 32, texture:getDimensions())
   end
   if lengthOfCurrentFrame == -100 then
+    -- return fall asset
     lengthOfCurrentFrame = lengthOfCurrentFrame + 1
     return love.graphics.newQuad(32, 0, 32, 32, texture:getDimensions())
   end
 
 if lengthOfCurrentFrame == 15 then
+  -- returns a new alking asset every 15 frames
   lengthOfCurrentFrame = 1
   if lastFrameDisplayed > 10 then
     lastFrameDisplayed = 1
